@@ -1,0 +1,95 @@
+/FarmManagementApp
+├── backend/                      # Backend kısmı, iş mantığı ve veri işlemleri burada yer alacak
+│   ├── models/                   # Veritabanı modelleri, veri sınıfları
+│   │   ├── animal.py             # Animal abstract class, koyun ve inek sınıfları burada
+│   │   ├── cow.py                # Cow sınıfı (inek)
+│   │   ├── sheep.py              # Sheep sınıfı (koyun)
+│   │   └── vaccine.py            # Vaccine ve bakım ile ilgili sınıflar
+│   ├── services/                 # İş mantığı ve servisler
+│   │   ├── animal_service.py     # Hayvanlarla ilgili iş mantığı
+│   │   ├── notification_service.py # Bildirim sistemi ve raporlamalar
+│   │   └── database_service.py   # Veritabanı bağlantı ve işlemleri (CRUD operasyonları)
+│   ├── utils/                    # Yardımcı fonksiyonlar ve ortak kullanılacak araçlar
+│   │   ├── validators.py         # Doğrulama (validation) ve filtre işlemleri
+│   │   └── helpers.py            # Diğer yardımcı fonksiyonlar
+│   └── config/                   # Konfigürasyon ayarları (veritabanı, bildirimler vs.)
+│       └── config.py             # Genel ayarlar ve bağlantı bilgileri
+│
+├── frontend/                     # Arayüz ile ilgili dosyalar
+│   ├── main_window.py            # Ana arayüz dosyası (tkinter arayüzü)
+│   ├── animal_view.py            # Hayvanlarla ilgili görüntüleme ekranı (detaylar, arama)
+│   ├── report_view.py            # Günlük raporları gösteren ekran
+│   ├── notification_view.py      # Bildirimler ve yapılması gereken işlemler için arayüz
+│   └── tree_view.py              # Soyağacı görüntüleme ekranı
+│
+├── database/                     # Veritabanı dosyaları ve yönetimi
+│   ├── migrations/               # Eğer veritabanında değişiklik olursa, versiyon takip sistemi
+│   └── farm_management.db        # SQLite veritabanı dosyası
+│
+├── tests/                        # Birim ve entegrasyon testleri
+│   ├── test_animal_service.py    # Hayvan servisi için testler
+│   ├── test_notification.py      # Bildirim sistemi testleri
+│   ├── test_database.py          # Veritabanı ile ilgili testler
+│   └── test_vaccine_service.py   # Aşı ve bakım servisi testleri
+│
+├── requirements.txt              # Projede kullanılan kütüphaneler ve bağımlılıklar
+└── README.md                     # Proje hakkında genel bilgi ve kullanım talimatları
+
+---
+
+# VETLOG Proje Dosya Yapısı Açıklaması
+
+Bu dosya, VETLOG projesinin dosya yapısını ve her bir dosyanın işlevini açıklar. Aşağıda klasörlerin ve dosyaların ne amaçla kullanıldıkları detaylandırılmıştır.
+
+## /FarmManagementApp/
+Bu dizin, uygulamanın ana yapısını içerir. Backend, frontend ve veritabanı ile ilgili tüm kaynaklar burada yer alır.
+
+### 1. backend/
+Backend kısmı, iş mantığının ve veri işlemlerinin yürütüldüğü yerdir. Burada hayvanlarla ilgili işlemler, aşı takibi, bildirim sistemi ve veritabanı işlemleri yer alır.
+
+- **models/**: Veritabanı modellerini ve veri sınıflarını içerir.
+  - **animal.py**: Tüm hayvan sınıfları için temel bir *abstract class* olan `Animal` sınıfı burada tanımlanmıştır. Koyun ve inek gibi hayvan türleri bu sınıftan türetilir.
+  - **cow.py**: İnekler için spesifik bir sınıf. İneklerin özellikleri ve onlara özel işlemler burada tanımlanır.
+  - **sheep.py**: Koyunlar için spesifik bir sınıf. Koyunlarla ilgili işlemler ve özellikler bu dosyada tanımlıdır.
+  - **vaccine.py**: Hayvanların aşı bilgileri ve bakım takibi için sınıflar. Her hayvanın aşıları ve bakım gereksinimlerini izlemek için kullanılır.
+
+- **services/**: İş mantığı ve servislerin yer aldığı klasördür. Backend işlemlerinin yönetildiği fonksiyonlar ve servis sınıfları burada bulunur.
+  - **animal_service.py**: Hayvanlarla ilgili iş mantığı burada yürütülür. Hayvan ekleme, güncelleme, silme gibi CRUD işlemleri bu dosyada tanımlıdır.
+  - **notification_service.py**: Bildirim sistemi ile ilgili işlevler burada yer alır. Aşı zamanı gelen hayvanlar için uyarılar ve bakım hatırlatmaları burada yönetilir.
+  - **database_service.py**: Veritabanı ile ilgili CRUD (Create, Read, Update, Delete) işlemlerini yöneten servis. Veritabanına bağlanma, veri çekme ve güncelleme işlemleri burada yapılır.
+
+- **utils/**: Yardımcı fonksiyonlar ve araçlar bu klasörde bulunur.
+  - **validators.py**: Verilerin doğrulanmasını sağlayan fonksiyonlar. Kullanıcı tarafından girilen verilerin geçerli olup olmadığını kontrol eden doğrulama işlemleri burada tanımlıdır.
+  - **helpers.py**: Genel amaçlı yardımcı fonksiyonlar. Uygulama genelinde kullanılan yardımcı araçlar burada tutulur.
+
+- **config/**: Konfigürasyon ayarlarını içerir.
+  - **config.py**: Veritabanı bağlantı bilgileri, bildirim ayarları ve diğer uygulama ayarlarının tanımlandığı dosya. Proje genelinde sabit olarak kullanılacak ayarlar bu dosyada tutulur.
+
+### 2. frontend/
+Kullanıcı arayüzü (GUI) ile ilgili dosyalar bu klasör altında yer alır. Tkinter gibi bir GUI framework'ü ile masaüstü uygulamasının arayüzü burada geliştirilir.
+
+- **main_window.py**: Uygulamanın ana arayüz dosyasıdır. Tkinter ile ana pencerenin oluşturulması ve yönetimi burada yapılır.
+- **animal_view.py**: Hayvanların listelendiği ve detaylarının görüntülendiği ekran. Kullanıcı, hayvanların bilgilerini bu ekrandan görebilir ve işlem yapabilir.
+- **report_view.py**: Günlük raporların ve istatistiklerin gösterildiği ekran. Hayvanların sağlık durumu, aşı takvimi gibi veriler bu ekranda raporlanır.
+- **notification_view.py**: Bildirimlerin ve yapılması gereken işlemlerin listelendiği ekran. Aşılar ve bakımla ilgili zamanında yapılması gereken işlemler kullanıcıya burada gösterilir.
+- **tree_view.py**: Soyağacı görüntüleme ekranı. Hayvanların soyağacını görsel olarak gösteren bu ekran, nesiller arası bağlantıları kullanıcıya sunar.
+
+### 3. database/
+Veritabanı dosyaları ve yönetimi bu klasörde bulunur. SQLite gibi bir veritabanı çözümü kullanılarak hayvanlarla ilgili veriler burada depolanır.
+
+- **migrations/**: Eğer veritabanı şeması üzerinde bir değişiklik yapılırsa, bu değişikliklerin izlenmesi ve yönetilmesi için kullanılan migration dosyaları burada bulunur.
+- **farm_management.db**: Uygulamanın verilerini depolayan SQLite veritabanı dosyasıdır. Hayvan bilgileri, aşılar, soy kütüğü gibi veriler bu dosyada saklanır.
+
+### 4. tests/
+Projedeki birim ve entegrasyon testleri bu klasörde bulunur. Her bir fonksiyonun ve modülün doğru çalıştığından emin olmak için test senaryoları burada yazılır.
+
+- **test_animal_service.py**: Hayvan servisi için yazılmış birim testleri içerir. Hayvan ekleme, güncelleme ve silme gibi fonksiyonların doğru çalıştığı bu dosyada test edilir.
+- **test_notification.py**: Bildirim sistemine dair testler burada bulunur. Aşı hatırlatmaları ve diğer bildirimlerin zamanında ve doğru çalıştığı bu testlerle kontrol edilir.
+- **test_database.py**: Veritabanı ile ilgili test senaryoları. Veritabanına veri ekleme, okuma ve güncelleme işlemlerinin doğruluğu test edilir.
+- **test_vaccine_service.py**: Aşı ve bakım servisi ile ilgili birim testleri. Aşı takibi ve sağlık kontrollerinin doğru yapıldığından emin olmak için bu dosyada testler yazılmıştır.
+
+### 5. requirements.txt
+Projenin çalışması için gerekli olan Python kütüphanelerinin listesini içerir. Uygulamanın bağımlılıkları bu dosyada tanımlıdır ve kurulum için kullanılır.
+
+### 6. README.md
+Proje hakkında genel bilgi ve kullanım talimatlarını içerir. Projenin nasıl kurulacağı, kullanılacağı ve geliştirileceği hakkında bilgiler bu dosyada bulunur.

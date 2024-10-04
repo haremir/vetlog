@@ -4,7 +4,7 @@ save_data_on_exit = True
 save_history = True
 save_non_project_files = False
 project_type = 'empty-project-type'
-recent_files = ['..\\..\\.spyder-py3\\temp.py', 'backend\\models\\animal.py', 'backend\\models\\cow.py', 'backend\\models\\sheep.py', 'backend\\models\\vaccine.py', 'backend\\services\\animal_services.py', 'backend\\services\\notification_service.py', 'backend\\services\\database_service.py', 'backend\\utils\\validators.py', 'backend\\utils\\helpers.py', 'backend\\config\\config.py', 'database\\vetlog.db']
+recent_files = ['README.md', 'explation.txt']
 
 [main]
 version = 0.2.0

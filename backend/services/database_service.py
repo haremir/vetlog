@@ -135,7 +135,7 @@ class DatabaseService:
         # Değişiklikleri kaydet
         self.connection.commit()
 
-    # CRUD İşlemleri: Hayvan
+    # CRUD İşlemleri: Animal
     def add_animal(self, name, species, breed, birth_date, gender, farm_id):
         self.cursor.execute('''
             INSERT INTO Animal (Name, Species, Breed, BirthDate, Gender, FarmID)
@@ -159,7 +159,7 @@ class DatabaseService:
         self.cursor.execute('DELETE FROM Animal WHERE AnimalID = ?;', (animal_id,))
         self.connection.commit()
 
-    # CRUD İşlemleri: Aşı
+    # CRUD İşlemleri: Vaccine
     def add_vaccine(self, name, description, required_dose):
         self.cursor.execute('''
             INSERT INTO Vaccine (Name, Description, RequiredDose)
@@ -183,7 +183,127 @@ class DatabaseService:
         self.cursor.execute('DELETE FROM Vaccine WHERE VaccineID = ?;', (vaccine_id,))
         self.connection.commit()
 
-    # CRUD İşlemleri: Aşı Durumu
+    # CRUD İşlemleri: Vaccination
+    def add_vaccination(self, animal_id, vaccine_id, dose_number, vaccination_date):
+        self.cursor.execute('''
+            INSERT INTO Vaccination (AnimalID, VaccineID, DoseNumber, VaccinationDate)
+            VALUES (?, ?, ?, ?);
+        ''', (animal_id, vaccine_id, dose_number, vaccination_date))
+        self.connection.commit()
+
+    def get_vaccinations(self):
+        self.cursor.execute('SELECT * FROM Vaccination;')
+        return self.cursor.fetchall()
+
+    def update_vaccination(self, vaccination_id, animal_id, vaccine_id, dose_number, vaccination_date):
+        self.cursor.execute('''
+            UPDATE Vaccination
+            SET AnimalID = ?, VaccineID = ?, DoseNumber = ?, VaccinationDate = ?
+            WHERE VaccinationID = ?;
+        ''', (animal_id, vaccine_id, dose_number, vaccination_date, vaccination_id))
+        self.connection.commit()
+
+    def delete_vaccination(self, vaccination_id):
+        self.cursor.execute('DELETE FROM Vaccination WHERE VaccinationID = ?;', (vaccination_id,))
+        self.connection.commit()
+
+    # CRUD İşlemleri: User
+    def add_user(self, username, password_hash, role, full_name, email):
+        self.cursor.execute('''
+            INSERT INTO User (Username, PasswordHash, Role, FullName, Email)
+            VALUES (?, ?, ?, ?, ?);
+        ''', (username, password_hash, role, full_name, email))
+        self.connection.commit()
+
+    def get_users(self):
+        self.cursor.execute('SELECT * FROM User;')
+        return self.cursor.fetchall()
+
+    def update_user(self, user_id, username, password_hash, role, full_name, email):
+        self.cursor.execute('''
+            UPDATE User
+            SET Username = ?, PasswordHash = ?, Role = ?, FullName = ?, Email = ?
+            WHERE UserID = ?;
+        ''', (username, password_hash, role, full_name, email, user_id))
+        self.connection.commit()
+
+    def delete_user(self, user_id):
+        self.cursor.execute('DELETE FROM User WHERE UserID = ?;', (user_id,))
+        self.connection.commit()
+
+    # CRUD İşlemleri: Notification
+    def add_notification(self, user_id, message, notification_date, is_read):
+        self.cursor.execute('''
+            INSERT INTO Notification (UserID, Message, NotificationDate, IsRead)
+            VALUES (?, ?, ?, ?);
+        ''', (user_id, message, notification_date, is_read))
+        self.connection.commit()
+
+    def get_notifications(self):
+        self.cursor.execute('SELECT * FROM Notification;')
+        return self.cursor.fetchall()
+
+    def update_notification(self, notification_id, user_id, message, notification_date, is_read):
+        self.cursor.execute('''
+            UPDATE Notification
+            SET UserID = ?, Message = ?, NotificationDate = ?, IsRead = ?
+            WHERE NotificationID = ?;
+        ''', (user_id, message, notification_date, is_read, notification_id))
+        self.connection.commit()
+
+    def delete_notification(self, notification_id):
+        self.cursor.execute('DELETE FROM Notification WHERE NotificationID = ?;', (notification_id,))
+        self.connection.commit()
+
+    # CRUD İşlemleri: Genealogy
+    def add_genealogy(self, parent_id, offspring_id):
+        self.cursor.execute('''
+            INSERT INTO Genealogy (ParentID, OffspringID)
+            VALUES (?, ?);
+        ''', (parent_id, offspring_id))
+        self.connection.commit()
+
+    def get_genealogy(self):
+        self.cursor.execute('SELECT * FROM Genealogy;')
+        return self.cursor.fetchall()
+
+    def update_genealogy(self, genealogy_id, parent_id, offspring_id):
+        self.cursor.execute('''
+            UPDATE Genealogy
+            SET ParentID = ?, OffspringID = ?
+            WHERE GenealogyID = ?;
+        ''', (parent_id, offspring_id, genealogy_id))
+        self.connection.commit()
+
+    def delete_genealogy(self, genealogy_id):
+        self.cursor.execute('DELETE FROM Genealogy WHERE GenealogyID = ?;', (genealogy_id,))
+        self.connection.commit()
+
+    # CRUD İşlemleri: DailyReport
+    def add_daily_report(self, animal_id, report_date, health_status, weight, notes):
+        self.cursor.execute('''
+            INSERT INTO DailyReport (AnimalID, ReportDate, HealthStatus, Weight, Notes)
+            VALUES (?, ?, ?, ?, ?);
+        ''', (animal_id, report_date, health_status, weight, notes))
+        self.connection.commit()
+
+    def get_daily_reports(self):
+        self.cursor.execute('SELECT * FROM DailyReport;')
+        return self.cursor.fetchall()
+
+    def update_daily_report(self, report_id, animal_id, report_date, health_status, weight, notes):
+        self.cursor.execute('''
+            UPDATE DailyReport
+            SET AnimalID = ?, ReportDate = ?, HealthStatus = ?, Weight = ?, Notes = ?
+            WHERE ReportID = ?;
+        ''', (animal_id, report_date, health_status, weight, notes, report_id))
+        self.connection.commit()
+
+    def delete_daily_report(self, report_id):
+        self.cursor.execute('DELETE FROM DailyReport WHERE ReportID = ?;', (report_id,))
+        self.connection.commit()
+
+    # CRUD İşlemleri: VaccineStatus
     def add_vaccine_status(self, animal_id, vaccine_id, status):
         self.cursor.execute('''
             INSERT INTO VaccineStatus (AnimalID, VaccineID, Status)
@@ -191,23 +311,23 @@ class DatabaseService:
         ''', (animal_id, vaccine_id, status))
         self.connection.commit()
 
-    def get_vaccine_status(self):
+    def get_vaccine_statuses(self):
         self.cursor.execute('SELECT * FROM VaccineStatus;')
         return self.cursor.fetchall()
 
-    def update_vaccine_status(self, status_id, animal_id, vaccine_id, status):
+    def update_vaccine_status(self, vaccine_status_id, animal_id, vaccine_id, status):
         self.cursor.execute('''
             UPDATE VaccineStatus
             SET AnimalID = ?, VaccineID = ?, Status = ?
             WHERE VaccineStatusID = ?;
-        ''', (animal_id, vaccine_id, status, status_id))
+        ''', (animal_id, vaccine_id, status, vaccine_status_id))
         self.connection.commit()
 
-    def delete_vaccine_status(self, status_id):
-        self.cursor.execute('DELETE FROM VaccineStatus WHERE VaccineStatusID = ?;', (status_id,))
+    def delete_vaccine_status(self, vaccine_status_id):
+        self.cursor.execute('DELETE FROM VaccineStatus WHERE VaccineStatusID = ?;', (vaccine_status_id,))
         self.connection.commit()
 
-    # CRUD İşlemleri: İlaç
+    # CRUD İşlemleri: Medication
     def add_medication(self, animal_id, name, dosage, administration_date):
         self.cursor.execute('''
             INSERT INTO Medication (AnimalID, Name, Dosage, AdministrationDate)
@@ -231,7 +351,7 @@ class DatabaseService:
         self.cursor.execute('DELETE FROM Medication WHERE MedicationID = ?;', (medication_id,))
         self.connection.commit()
 
-    # CRUD İşlemleri: Sağlık Geçmişi
+    # CRUD İşlemleri: HealthHistory
     def add_health_history(self, animal_id, date, description):
         self.cursor.execute('''
             INSERT INTO HealthHistory (AnimalID, Date, Description)
@@ -254,11 +374,12 @@ class DatabaseService:
     def delete_health_history(self, health_history_id):
         self.cursor.execute('DELETE FROM HealthHistory WHERE HealthHistoryID = ?;', (health_history_id,))
         self.connection.commit()
-
-    def close_connection(self):
+        
+    def close(self):
         self.connection.close()
-
 
 if __name__ == "__main__":
     db_service = DatabaseService(r'C:/Users/emirh/Desktop/vetlog/database/vetlog.db')
     db_service.create_tables()
+    
+    db_service.close()  # Bağlantıyı kapatma

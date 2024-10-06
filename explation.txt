@@ -34,7 +34,7 @@
 │
 ├── database/                     # Veritabanı dosyaları ve yönetimi
 │   ├── migrations/               # Eğer veritabanında değişiklik olursa, versiyon takip sistemi
-│   └── farm_management.db        # SQLite veritabanı dosyası
+│   └── vetlog.db        # SQLite veritabanı dosyası
 │
 ├── tests/                        # Birim ve entegrasyon testleri
 │   ├── test_animal_service.py    # Hayvan servisi için testler
